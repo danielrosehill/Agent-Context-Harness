@@ -1,0 +1,27 @@
+{
+  "name": "Agent-Context-Harness",
+  "summary": "Per-turn router that sends each user message to the current task, an existing parallel worker, or a new parallel full-agent session, to keep context clean instead of compacting.",
+  "status": "idea-research",
+  "created": "2026-10-16",
+  "visibility": "public",
+  "repo_url": "https://github.com/danielrosehill/Agent-Context-Harness",
+  "local_path": "~/repos/github/ai-agents-and-prompts/Agent-Context-Harness",
+  "source": {
+    "audio": "context/voice-note.mp3",
+    "transcript_raw": "context/transcript-raw.txt",
+    "transcription": "AssemblyAI universal, 2026-10-16"
+  },
+  "prior_art": {
+    "verified": "2026-10-16",
+    "closest": "Claude Code Projects (https://code.claude.com/docs/en/claude-projects)",
+    "verdict": "Core idea shipped in Claude Code Projects. Open gaps: explicit inspectable router with confidence and eval set, session-thread-subagent tree view, nesting, vendor-neutral harness."
+  },
+  "next_step": "Phase 1: trial Claude Code Projects on a real repo and log routing decisions vs. intended (docs/development-plan.md).",
+  "related_repos": [
+    "https://github.com/danielrosehill/Claude-Air-Traffic-Control",
+    "https://github.com/danielrosehill/Claude-Fleet-Traffic-Shaper",
+    "https://github.com/danielrosehill/Claude-Tooling-Prior-Art"
+  ],
+  "hf_resources": [],
+  "hf_resources_checked": "2026-10-16"
+}
