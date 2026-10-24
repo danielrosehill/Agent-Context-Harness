@@ -1,0 +1,40 @@
+{
+  "tfidf_message_only": {
+    "validation": {
+      "n": 553,
+      "accuracy": 0.9837,
+      "auc_pr": 0.9985,
+      "recall_at_p95": 0.9958,
+      "threshold": 0.4405
+    },
+    "test": {
+      "n": 493,
+      "accuracy": 0.9675,
+      "auc_pr": 0.9966,
+      "recall_at_p95": 0.9813,
+      "threshold": 0.5122
+    }
+  },
+  "tfidf_message_plus_context": {
+    "validation": {
+      "n": 553,
+      "accuracy": 0.8246,
+      "auc_pr": 0.8813,
+      "recall_at_p95": 0.3515,
+      "threshold": 0.7401
+    },
+    "test": {
+      "n": 493,
+      "accuracy": 0.8519,
+      "auc_pr": 0.8991,
+      "recall_at_p95": 0.4299,
+      "threshold": 0.7016
+    }
+  },
+  "always_continue": {
+    "test": {
+      "accuracy": 0.565922920892495,
+      "recall_new_task": 0.0
+    }
+  }
+}

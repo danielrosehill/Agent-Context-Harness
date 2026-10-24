@@ -18,7 +18,7 @@
     "closest": "Claude Code Projects (https://code.claude.com/docs/en/claude-projects)",
     "verdict": "Core idea shipped in Claude Code Projects. Open gaps: explicit inspectable router with confidence and eval set, session-thread-subagent tree view, nesting, vendor-neutral harness."
   },
-  "next_step": "L2 gold eval set from Daniel's transcripts; L4 fine-tune on the HF dataset (agreed rows). L1 tmux transport passed 2026-10-24.",
+  "next_step": "L4 exit: ONNX int8 export + CPU latency bench of atbd-r3 (ModernBERT-base, Modal volume ai-training:/data/runs/atbd-r3-modernbert-full3ep/model). Publish dataset v0.2 (counterfactual pairs) to HF. L2 gold eval set from Daniel's transcripts. L1 passed 2026-10-24.",
   "related_repos": [
     "https://github.com/danielrosehill/Claude-Air-Traffic-Control",
     "https://github.com/danielrosehill/Claude-Fleet-Traffic-Shaper",
@@ -53,6 +53,60 @@
       "date": "2026-10-24",
       "decision": "Public synthetic training set Agent-Task-Break-Detector on HF",
       "why": "Harness-agnostic name and scope; synthetic so it can be public; real transcripts stay private"
+    }
+  ],
+  "training_runs": [
+    {
+      "run": "atbd-r1-*",
+      "rung": "probe",
+      "gpu": "L4",
+      "minutes": 1,
+      "verdict": "no-go",
+      "note": "1k rows, 1 epoch: collapsed to continue"
+    },
+    {
+      "run": "atbd-r2-modernbert-full1ep",
+      "rung": "probe",
+      "model": "answerdotai/ModernBERT-base",
+      "gpu": "L4",
+      "minutes": 2.4,
+      "val": {
+        "recall_at_p95": 0.958,
+        "pair_accuracy": 0.868
+      },
+      "test": {
+        "recall_at_p95": 0.883,
+        "pair_accuracy": 0.774
+      },
+      "verdict": "go"
+    },
+    {
+      "run": "atbd-r2-ettin150-full1ep",
+      "rung": "probe",
+      "model": "jhu-clsp/ettin-encoder-150m",
+      "gpu": "L4",
+      "minutes": 2.4,
+      "val": {
+        "recall_at_p95": 0.025,
+        "pair_accuracy": 0.257
+      },
+      "verdict": "no-go"
+    },
+    {
+      "run": "atbd-r3-modernbert-full3ep",
+      "rung": "full",
+      "model": "answerdotai/ModernBERT-base",
+      "gpu": "L4",
+      "minutes": 6.9,
+      "val": {
+        "recall_at_p95": 0.925,
+        "pair_accuracy": 0.84
+      },
+      "test": {
+        "recall_at_p95": 0.902,
+        "pair_accuracy": 0.791
+      },
+      "verdict": "best so far; test pair accuracy just under 0.80 bar"
     }
   ]
 }

@@ -33,6 +33,8 @@ sessions, not subagents, so that each thread's context stays clean.
 - `docs/spec.md`: the draft spec. Items are tagged [D] (Daniel), [P] (agent proposal) or [PA]
   (shaped by prior art). It ends with a decision log.
 - `docs/development-plan.md`: phases 0–6, each with an exit test.
+- `model/`: `baseline.py`, `train.py` (HF Trainer cross-encoder), `common.py`. `model/data/` (v0.2 JSONL) is gitignored.
+- `docs/eval-plan.md`: pass bar, baselines, every training run.
 - `project.json`: machine-readable summary. Keep `status` and `next_step` current.
 - `eval/`: does not exist yet. Phase 1 and 2 data goes here, redacted.
 
@@ -49,7 +51,10 @@ sessions, not subagents, so that each thread's context stays clean.
 ## Next step
 
 Synthetic dataset v0.1 is published (L3, synthetic part) and L1 (tmux end to end) passed on
-2026-10-24. Next: L2, the gold eval set from Daniel's transcripts, then L4, fine-tuning. Test hook
+2026-10-24. v0.2 (counterfactual pairs, built locally by `dataset/scripts/add_counterfactuals.py`,
+not yet on the Hub) trained ModernBERT-base on Modal: runs and numbers in `docs/eval-plan.md`,
+code in `model/`. Next: ONNX int8 export and latency bench, publish v0.2, then L2, the gold eval
+set from Daniel's transcripts. Test hook
 changes only in a throwaway tmux session started from the scratch project, never by triggering a
 split in a live session: the transport types into real terminals. The Projects trial (phase 1) still stands
 for the cloud/mobile router idea.
