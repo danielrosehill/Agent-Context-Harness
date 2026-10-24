@@ -51,6 +51,7 @@ See [`docs/prior-art.md`](docs/prior-art.md).
 | [`context/2026-10-24_auto-session-hook-transcript-raw.txt`](context/2026-10-24_auto-session-hook-transcript-raw.txt) | Raw transcript of the second voice note, about a local `/clear`-replacing hook (AssemblyAI universal, 2026-10-24). Audio not archived |
 | [`docs/prior-art-2026-10-24.md`](docs/prior-art-2026-10-24.md) | Prior-art update: no harness or released model decides "new session vs continue" per turn |
 | [`docs/local-classifier-plan.md`](docs/local-classifier-plan.md) | Plan for a small local ONNX classifier: data, model, exit tests |
+| [`dataset/`](dataset/) | Scripts and card for the public synthetic training set [Agent-Task-Break-Detector](https://huggingface.co/datasets/danielrosehill/Agent-Task-Break-Detector) |
 | [`hooks/new-task-split/`](hooks/new-task-split/) | Draft Claude Code hook: blocks an unrelated prompt, runs `/clear`, re-sends it |
 | [`project.json`](project.json) | Machine-readable summary |
 

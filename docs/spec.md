@@ -200,4 +200,8 @@ Append one entry per decision: date, decision, what settled it.
   model doing this. Claude Code's only related feature is a time-based idle-return `/clear` hint
   (75+ min idle, since v2.1.92). Plan: [`local-classifier-plan.md`](local-classifier-plan.md). The
   Haiku path is kept only as a teacher for labelling.
+- 2026-10-24: **Training data is a public, fully synthetic HF dataset,** named
+  Agent-Task-Break-Detector (Daniel: not "Coding Agent", since any agentic process can use it).
+  Seven agent kinds, half coding. v0.1: 986 scenarios / 5,916 rows, Haiku 5.5 generator, Sonnet
+  5.5 blind verifier, 86.6% agreement, US$2.38. https://huggingface.co/datasets/danielrosehill/Agent-Task-Break-Detector. Real-transcript labels stay private.
 

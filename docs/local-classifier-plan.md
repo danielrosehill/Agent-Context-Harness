@@ -63,6 +63,12 @@ context, a wrong `continue` costs some extra context. Tune for **precision on `n
    old session) and every `same:` prefix is a gold "wrong split" label. The hook already logs
    these to `~/.cache/new-task-split/decisions.jsonl`.
 
+**Synthetic set, v0.1 (2026-10-24):** [https://huggingface.co/datasets/danielrosehill/Agent-Task-Break-Detector](https://huggingface.co/datasets/danielrosehill/Agent-Task-Break-Detector). Haiku 5.5 writes agent sessions of seven
+kinds (half coding) with six candidate next messages each (follow_up, hard_negative,
+implicit_reference → continue; same_workspace, subtle_pivot, far → new_task), and Sonnet 5.5
+re-labels them blind. Train on `agreed == true`. `subtle_pivot` is the noisy slot (53%
+disagreement). Scripts and card: [`../dataset/`](../dataset/).
+
 Exclude Hebrew/RTL and redact before anything leaves the machine. Transcripts are private: the
 dataset stays private unless it is fully synthetic.
 

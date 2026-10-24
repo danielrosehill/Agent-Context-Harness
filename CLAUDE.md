@@ -22,6 +22,11 @@ sessions, not subagents, so that each thread's context stays clean.
 - `context/transcript-raw.txt`: its raw transcript (AssemblyAI universal).
 - `context/2026-10-24_auto-session-hook-transcript-raw.txt`: raw transcript of the second voice
   note (AssemblyAI universal). Immutable like the first. The MP3 was deliberately not added.
+- `dataset/`: generator for the public HF dataset `danielrosehill/Agent-Task-Break-Detector`
+  (https://huggingface.co/datasets/danielrosehill/Agent-Task-Break-Detector). `scripts/make_requests.py` → `anthropic_batch.py` (Haiku) → `verify_requests.py` →
+  `anthropic_batch.py --model claude-sonnet-5-5` → `build_dataset.py … hf`, then `hf upload`.
+  `raw/` and `hf/data/` are gitignored; the data lives on the Hub. Fully synthetic only: never add
+  Daniel's transcripts to it.
 - `hooks/new-task-split/`: draft `UserPromptSubmit` + `SessionStart` hook and its README.
 - `docs/prior-art-2026-10-24.md`, `docs/local-classifier-plan.md`: the local-classifier track.
 - `docs/prior-art.md`: what exists, with links and confirmed or inferred tags.
@@ -43,6 +48,6 @@ sessions, not subagents, so that each thread's context stays clean.
 
 ## Next step
 
-Local track, step L1 in `docs/development-plan.md`: test the hook's terminal transport end to end
+Synthetic dataset v0.1 is published (L3, synthetic part). Local track, step L1 in `docs/development-plan.md`: test the hook's terminal transport end to end
 in a throwaway tmux session. Then L2, the gold eval set. The Projects trial (phase 1) still stands
 for the cloud/mobile router idea.

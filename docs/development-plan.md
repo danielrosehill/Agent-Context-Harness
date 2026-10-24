@@ -86,7 +86,10 @@ cloud-only, and this track replaces the manual `/clear` in the **local CLI**.
   re-send, SessionStart notice, undo.
 - **L2.** Gold eval set from Daniel's own transcripts (this replaces phase 2's labels with the
   binary `continue` / `new_task`).
-- **L3.** Teacher labelling and synthetic splices, batched.
+- **L3.** Teacher labelling and synthetic splices, batched. **Synthetic part done 2026-10-24:**
+  public dataset [Agent-Task-Break-Detector](https://huggingface.co/datasets/danielrosehill/Agent-Task-Break-Detector) v0.1 (986 scenarios, 5,916 rows, 86.6%
+  generator/verifier agreement, US$2.38), built by [`../dataset/`](../dataset/). Teacher labels on
+  real transcripts are still to do, and stay private.
 - **L4.** Fine-tune ModernBERT-base or Ettin-150M, export int8 ONNX, benchmark latency.
 - **L5.** Swap the hook's backend to the local model and run it for a week, logging undos.
 

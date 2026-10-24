@@ -18,13 +18,25 @@
     "closest": "Claude Code Projects (https://code.claude.com/docs/en/claude-projects)",
     "verdict": "Core idea shipped in Claude Code Projects. Open gaps: explicit inspectable router with confidence and eval set, session-thread-subagent tree view, nesting, vendor-neutral harness."
   },
-  "next_step": "L1: test hooks/new-task-split terminal transport end to end in tmux; then L2 gold eval set (docs/local-classifier-plan.md).",
+  "next_step": "L1: test hooks/new-task-split terminal transport end to end in tmux; L2 gold eval set; L4 fine-tune on the HF dataset (agreed rows).",
   "related_repos": [
     "https://github.com/danielrosehill/Claude-Air-Traffic-Control",
     "https://github.com/danielrosehill/Claude-Fleet-Traffic-Shaper",
     "https://github.com/danielrosehill/Claude-Tooling-Prior-Art"
   ],
-  "hf_resources": [],
+  "hf_resources": [
+    {
+      "type": "dataset",
+      "id": "danielrosehill/Agent-Task-Break-Detector",
+      "url": "https://huggingface.co/datasets/danielrosehill/Agent-Task-Break-Detector",
+      "visibility": "public",
+      "version": "v0.1",
+      "published": "2026-10-24",
+      "rows": 5916,
+      "scenarios": 986,
+      "commit": "30d2dc1c3dfbfae9e41bccbc9a1a8442741dc5c6"
+    }
+  ],
   "hf_resources_checked": "2026-10-24",
   "prior_art_local_classifier": {
     "verified": "2026-10-24",
@@ -36,6 +48,11 @@
       "date": "2026-10-24",
       "decision": "Classifier runs on local inference, not a per-turn API call",
       "why": "Haiku draft measured 3-5 s blocking latency per prompt; local is portable across harnesses"
+    },
+    {
+      "date": "2026-10-24",
+      "decision": "Public synthetic training set Agent-Task-Break-Detector on HF",
+      "why": "Harness-agnostic name and scope; synthetic so it can be public; real transcripts stay private"
     }
   ]
 }
