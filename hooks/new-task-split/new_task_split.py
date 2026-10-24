@@ -89,8 +89,18 @@ def prompt_hash(prompt: str) -> str:
     return hashlib.sha256(" ".join(prompt.split()).encode()).hexdigest()[:16]
 
 
-def recently_split(h: str) -> bool:
-    """True if this exact prompt was auto-split recently: the user came back with it, so it belongs."""
+def split_just_now(session_id: str, window: float = 20.0) -> bool:
+    """Loop guard: this session handed a message off moments ago, so don't split again."""
+    try:
+        last = json.loads((STATE / "splits.jsonl").read_text().splitlines()[-1])
+    except (OSError, ValueError, IndexError):
+        return False
+    return last.get("from") == session_id and time.time() - last["t"] < window
+
+
+def recently_split(h: str, session_id: str) -> bool:
+    """True if this exact prompt was auto-split out of this session recently: the user brought it
+    back (undo), so it belongs here. The fresh session receiving the moved copy doesn't match."""
     try:
         lines = (STATE / "splits.jsonl").read_text().splitlines()
     except OSError:
@@ -98,7 +108,7 @@ def recently_split(h: str) -> bool:
     now = time.time()
     for line in reversed(lines[-200:]):
         rec = json.loads(line)
-        if rec["hash"] == h and now - rec["t"] < RETURN_WINDOW:
+        if rec["hash"] == h and rec.get("from") == session_id and now - rec["t"] < RETURN_WINDOW:
             return True
     return False
 
@@ -174,17 +184,57 @@ def classify(prompt: str, prior_prompts: list[str], last_assistant: str, title: 
 
 # ---------- terminal transport ----------
 
+def _ancestors() -> set[int]:
+    """PIDs of this process and its ancestors (Linux /proc). Empty if unavailable."""
+    pids, pid = set(), os.getpid()
+    try:
+        while pid > 1:
+            pids.add(pid)
+            pid = int(Path(f"/proc/{pid}/stat").read_text().rsplit(")", 1)[1].split()[1])
+    except (OSError, ValueError, IndexError):
+        return set()
+    return pids
+
+
+def _qdbus() -> str | None:
+    # Plain `qdbus` is often the Qt5 chooser stub and fails on Qt6-only KDE installs.
+    return next((q for q in ("qdbus6", "/usr/lib/qt6/bin/qdbus", "qdbus") if shutil.which(q)), None)
+
+
+def _target_pid(kind: str) -> int | None:
+    try:
+        if kind == "tmux":
+            out = subprocess.run(["tmux", "display-message", "-p", "-t", os.environ["TMUX_PANE"], "#{pane_pid}"],
+                                 capture_output=True, text=True, timeout=3, check=True).stdout
+        else:
+            out = subprocess.run([_qdbus(), os.environ["KONSOLE_DBUS_SERVICE"], os.environ["KONSOLE_DBUS_SESSION"],
+                                  "org.kde.konsole.Session.foregroundProcessId"],
+                                 capture_output=True, text=True, timeout=3, check=True).stdout
+        return int(out.strip())
+    except (OSError, subprocess.SubprocessError, ValueError, KeyError, TypeError):
+        return None
+
+
 def transport() -> str:
-    if os.environ.get("KONSOLE_DBUS_SERVICE") and os.environ.get("KONSOLE_DBUS_SESSION") and shutil.which("qdbus"):
-        return "konsole"
+    """Pick the terminal to type into, innermost first, and only if it provably runs this session.
+
+    Env vars leak into nested terminals (tmux started from Konsole inherits KONSOLE_DBUS_*), so a
+    candidate is used only when its process is one of our ancestors. Otherwise: clipboard."""
+    candidates = []
     if os.environ.get("TMUX_PANE") and shutil.which("tmux"):
-        return "tmux"
+        candidates.append("tmux")
+    if os.environ.get("KONSOLE_DBUS_SERVICE") and os.environ.get("KONSOLE_DBUS_SESSION") and _qdbus():
+        candidates.append("konsole")
+    ours = _ancestors()
+    for kind in candidates:
+        if _target_pid(kind) in ours:
+            return kind
     return "clipboard"
 
 
 def send_text(kind: str, text: str) -> None:
     if kind == "konsole":
-        subprocess.run(["qdbus", os.environ["KONSOLE_DBUS_SERVICE"], os.environ["KONSOLE_DBUS_SESSION"],
+        subprocess.run([_qdbus(), os.environ["KONSOLE_DBUS_SERVICE"], os.environ["KONSOLE_DBUS_SESSION"],
                         "org.kde.konsole.Session.sendText", text], check=True, capture_output=True)
     elif kind == "tmux":
         subprocess.run(["tmux", "send-keys", "-t", os.environ["TMUX_PANE"], "-l", text], check=True)
@@ -195,6 +245,11 @@ def dispatch(kind: str, prompt_file: str) -> None:
     prompt = Path(prompt_file).read_text()
     Path(prompt_file).unlink(missing_ok=True)
     time.sleep(float(os.environ.get("NEW_TASK_SPLIT_DELAY", "1.0")))
+    # Claude Code (2.1.310, undocumented) puts a blocked prompt back in the input box, so typing
+    # /clear straight away appends to it ("…text/clear") and submits a normal message. Empty the
+    # box first: Ctrl+U clears the current line, Backspace joins the line above.
+    send_text(kind, "\x15\x7f" * (prompt.count("\n") + 1))
+    time.sleep(0.3)
     send_text(kind, "/clear")
     time.sleep(0.3)
     send_text(kind, "\r")
@@ -208,6 +263,7 @@ def dispatch(kind: str, prompt_file: str) -> None:
 def hand_off(prompt: str, session_id: str) -> str:
     """Start the move; return the transport used."""
     kind = transport()
+    log({"session": session_id, "decision": "hand_off", "transport": kind})
     STATE.mkdir(parents=True, exist_ok=True)
     with open(STATE / "splits.jsonl", "a") as f:
         f.write(json.dumps({"t": time.time(), "hash": prompt_hash(prompt), "from": session_id}) + "\n")
@@ -262,13 +318,16 @@ def on_prompt(event: dict) -> None:
     # Slash commands, shell escapes, and machine-sent turns (task notifications, peer messages).
     if stripped[:1] in ("/", "!", "<") or not stripped:
         sys.exit(0)
+    forced = low.startswith(FORCE_PREFIXES)
+    if forced:
+        # Re-send without the prefix, or the fresh session would split it again.
+        prompt = stripped.split(":", 1)[1].lstrip()
     h = prompt_hash(prompt)
-    if recently_split(h):
+    if recently_split(h, sid):
         log({"session": sid, "decision": "returned_after_split", "hash": h})
         add_context("new-task-split had moved this exact message to a fresh session; the user "
                     "brought it back here, so it belongs to this conversation. Answer it here.")
 
-    forced = low.startswith(FORCE_PREFIXES)
     if not forced:
         if len(stripped) < MIN_PROMPT_CHARS:
             sys.exit(0)
@@ -300,6 +359,9 @@ def on_prompt(event: dict) -> None:
     else:
         why = "forced with a new:/split: prefix"
 
+    if split_just_now(sid):
+        log({"session": sid, "decision": "skipped_loop_guard"})
+        sys.exit(0)
     kind = hand_off(prompt, sid)
     undo = "Undo: /resume and pick the previous session, then re-send; it won't be split again."
     if kind == "clipboard":
@@ -332,7 +394,11 @@ def on_session_start(event: dict) -> None:
 
 def main() -> None:
     if len(sys.argv) == 4 and sys.argv[1] == "--dispatch":
-        dispatch(sys.argv[2], sys.argv[3])
+        try:
+            dispatch(sys.argv[2], sys.argv[3])
+            log({"decision": "dispatched", "transport": sys.argv[2]})
+        except Exception as e:  # stdout/stderr are /dev/null here, so this log is the only trace
+            log({"decision": "dispatch_error", "transport": sys.argv[2], "error": f"{type(e).__name__}: {e}"[:300]})
         return
     if len(sys.argv) == 3 and sys.argv[1] == "--event":
         event = json.loads(Path(sys.argv[2]).read_text())

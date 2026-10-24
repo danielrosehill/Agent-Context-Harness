@@ -82,8 +82,10 @@ cloud-only, and this track replaces the manual `/clear` in the **local CLI**.
 
 - **L0. Done 2026-10-24.** Prior-art update ([`prior-art-2026-10-24.md`](prior-art-2026-10-24.md)):
   the gap is open. Hook draft with a Haiku teacher backend ([`../hooks/new-task-split/`](../hooks/new-task-split/)).
-- **L1.** Test the terminal transport end to end in a throwaway tmux session: block, `/clear`,
-  re-send, SessionStart notice, undo.
+- **L1. Done 2026-10-24 (tmux).** Tested end to end: block, `/clear`, re-send, SessionStart notice,
+  undo. Six bugs were fixed, including a re-split loop caused by Claude Code restoring blocked
+  prompts to the input box. Details in [`../hooks/new-task-split/README.md`](../hooks/new-task-split/README.md).
+  The Konsole transport outside tmux is still untested.
 - **L2.** Gold eval set from Daniel's own transcripts (this replaces phase 2's labels with the
   binary `continue` / `new_task`).
 - **L3.** Teacher labelling and synthetic splices, batched. **Synthetic part done 2026-10-24:**

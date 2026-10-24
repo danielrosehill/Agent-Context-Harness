@@ -18,7 +18,7 @@
     "closest": "Claude Code Projects (https://code.claude.com/docs/en/claude-projects)",
     "verdict": "Core idea shipped in Claude Code Projects. Open gaps: explicit inspectable router with confidence and eval set, session-thread-subagent tree view, nesting, vendor-neutral harness."
   },
-  "next_step": "L1: test hooks/new-task-split terminal transport end to end in tmux; L2 gold eval set; L4 fine-tune on the HF dataset (agreed rows).",
+  "next_step": "L2 gold eval set from Daniel's transcripts; L4 fine-tune on the HF dataset (agreed rows). L1 tmux transport passed 2026-10-24.",
   "related_repos": [
     "https://github.com/danielrosehill/Claude-Air-Traffic-Control",
     "https://github.com/danielrosehill/Claude-Fleet-Traffic-Shaper",

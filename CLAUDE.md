@@ -48,6 +48,8 @@ sessions, not subagents, so that each thread's context stays clean.
 
 ## Next step
 
-Synthetic dataset v0.1 is published (L3, synthetic part). Local track, step L1 in `docs/development-plan.md`: test the hook's terminal transport end to end
-in a throwaway tmux session. Then L2, the gold eval set. The Projects trial (phase 1) still stands
+Synthetic dataset v0.1 is published (L3, synthetic part) and L1 (tmux end to end) passed on
+2026-10-24. Next: L2, the gold eval set from Daniel's transcripts, then L4, fine-tuning. Test hook
+changes only in a throwaway tmux session started from the scratch project, never by triggering a
+split in a live session: the transport types into real terminals. The Projects trial (phase 1) still stands
 for the cloud/mobile router idea.
