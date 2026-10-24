@@ -53,7 +53,7 @@ sessions, not subagents, so that each thread's context stays clean.
 Synthetic dataset v0.1 is published (L3, synthetic part) and L1 (tmux end to end) passed on
 2026-10-24. v0.2 (counterfactual pairs, built locally by `dataset/scripts/add_counterfactuals.py`,
 not yet on the Hub) trained ModernBERT-base on Modal: runs and numbers in `docs/eval-plan.md`,
-code in `model/`. Done 2026-10-24: v0.2 on the Hub, r3 published as `danielrosehill/Agent-Task-Break-Detector-ModernBERT` (int8 ONNX), plugin `danielrosehill/New-Task-Split`. Next: calibrate the int8 threshold, shadow-mode trial, then L2, the gold eval
+code in `model/`. Done 2026-10-24: v0.2 on the Hub, r3 published as `danielrosehill/Agent-Task-Break-Detector-ModernBERT` (int8 ONNX), plugin `danielrosehill/New-Task-Split`. Next: trial via `claudehook --shadow` (int8 threshold calibrated to 0.76), then L2, the gold eval
 set from Daniel's transcripts. Test hook
 changes only in a throwaway tmux session started from the scratch project, never by triggering a
 split in a live session: the transport types into real terminals. The Projects trial (phase 1) still stands

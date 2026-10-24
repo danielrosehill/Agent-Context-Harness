@@ -18,7 +18,7 @@
     "closest": "Claude Code Projects (https://code.claude.com/docs/en/claude-projects)",
     "verdict": "Core idea shipped in Claude Code Projects. Open gaps: explicit inspectable router with confidence and eval set, session-thread-subagent tree view, nesting, vendor-neutral harness."
   },
-  "next_step": "Calibrate int8 threshold on validation (precision>=0.95) and update new_task_split.json on the Hub; run the plugin in shadow mode; then L2 gold eval from real sessions.",
+  "next_step": "Trial the plugin via the claudehook launcher (shadow first); then L2 gold eval from real sessions.",
   "related_repos": [
     "https://github.com/danielrosehill/Claude-Air-Traffic-Control",
     "https://github.com/danielrosehill/Claude-Fleet-Traffic-Shaper",
@@ -114,7 +114,7 @@
     "commit": "21ded66",
     "run": "atbd-r3-modernbert-full3ep",
     "onnx": "onnx/model_int8.onnx",
-    "int8_threshold": "0.95 provisional, calibration pending",
+    "int8_threshold": "0.76 (val n=697 P0.952 R0.921 at 0.751; test P0.941 R0.893), HF commit 62875e5",
     "wasabi": "hf-classifiers/danielrosehill/Agent-Task-Break-Detector-ModernBERT/2026-10-24_f05c9aa",
     "modal_weights": "deleted 2026-10-24 (66 files, 14.38 GB)"
   },
