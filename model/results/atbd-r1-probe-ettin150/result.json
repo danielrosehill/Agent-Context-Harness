@@ -1,0 +1,56 @@
+{
+  "args": {
+    "data": "data",
+    "model": "jhu-clsp/ettin-encoder-150m",
+    "train_rows": 1000,
+    "eval_rows": 0,
+    "epochs": 1.0,
+    "lr": 5e-05,
+    "max_len": 512,
+    "batch": 16,
+    "all_rows": false
+  },
+  "rows": {
+    "train": 1000,
+    "validation": 697,
+    "test": 608
+  },
+  "validation": {
+    "n": 697,
+    "accuracy": 0.66,
+    "auc_pr": 0.5722,
+    "recall_at_p95": 0.0042,
+    "threshold": 0.5426,
+    "accuracy_by_kind": {
+      "counterfactual_continue": 0.993,
+      "far": 0.038,
+      "follow_up": 0.991,
+      "hard_negative": 1.0,
+      "implicit_reference": 1.0,
+      "same_workspace": 0.0,
+      "subtle_pivot": 0.0
+    },
+    "pair_accuracy": 0.0069,
+    "pairs": 144
+  },
+  "test": {
+    "n": 608,
+    "accuracy": 0.6579,
+    "auc_pr": 0.553,
+    "recall_at_p95": 0.0514,
+    "threshold": 0.5267,
+    "accuracy_by_kind": {
+      "counterfactual_continue": 1.0,
+      "far": 0.065,
+      "follow_up": 0.968,
+      "hard_negative": 0.968,
+      "implicit_reference": 1.0,
+      "same_workspace": 0.06,
+      "subtle_pivot": 0.051
+    },
+    "pair_accuracy": 0.0435,
+    "pairs": 115
+  },
+  "minutes": 0.94,
+  "gpu": "NVIDIA L4"
+}

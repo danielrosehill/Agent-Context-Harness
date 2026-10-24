@@ -1,0 +1,50 @@
+{
+  "args": {
+    "data": "data",
+    "model": "answerdotai/ModernBERT-base",
+    "train_rows": 64,
+    "eval_rows": 32,
+    "epochs": 1.0,
+    "lr": 3e-05,
+    "max_len": 384,
+    "batch": 8,
+    "all_rows": false
+  },
+  "rows": {
+    "train": 64,
+    "validation": 32,
+    "test": 32
+  },
+  "validation": {
+    "n": 32,
+    "accuracy": 0.5,
+    "auc_pr": 0.3696,
+    "recall_at_p95": 0.0,
+    "threshold": null,
+    "accuracy_by_kind": {
+      "far": 0.0,
+      "follow_up": 0.857,
+      "hard_negative": 0.833,
+      "implicit_reference": 0.833,
+      "same_workspace": 0.0,
+      "subtle_pivot": 0.0
+    }
+  },
+  "test": {
+    "n": 32,
+    "accuracy": 0.5625,
+    "auc_pr": 0.4562,
+    "recall_at_p95": 0.1667,
+    "threshold": 0.544,
+    "accuracy_by_kind": {
+      "far": 0.167,
+      "follow_up": 0.8,
+      "hard_negative": 0.75,
+      "implicit_reference": 0.857,
+      "same_workspace": 0.333,
+      "subtle_pivot": 0.0
+    }
+  },
+  "minutes": 0.29,
+  "gpu": "Tesla T4"
+}

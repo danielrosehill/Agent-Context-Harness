@@ -18,7 +18,7 @@
     "closest": "Claude Code Projects (https://code.claude.com/docs/en/claude-projects)",
     "verdict": "Core idea shipped in Claude Code Projects. Open gaps: explicit inspectable router with confidence and eval set, session-thread-subagent tree view, nesting, vendor-neutral harness."
   },
-  "next_step": "L4 exit: ONNX int8 export + CPU latency bench of atbd-r3 (ModernBERT-base, Modal volume ai-training:/data/runs/atbd-r3-modernbert-full3ep/model). Publish dataset v0.2 (counterfactual pairs) to HF. L2 gold eval set from Daniel's transcripts. L1 passed 2026-10-24.",
+  "next_step": "Calibrate int8 threshold on validation (precision>=0.95) and update new_task_split.json on the Hub; run the plugin in shadow mode; then L2 gold eval from real sessions.",
   "related_repos": [
     "https://github.com/danielrosehill/Claude-Air-Traffic-Control",
     "https://github.com/danielrosehill/Claude-Fleet-Traffic-Shaper",
@@ -108,5 +108,16 @@
       },
       "verdict": "best so far; test pair accuracy just under 0.80 bar"
     }
-  ]
+  ],
+  "model": {
+    "hf": "danielrosehill/Agent-Task-Break-Detector-ModernBERT",
+    "commit": "21ded66",
+    "run": "atbd-r3-modernbert-full3ep",
+    "onnx": "onnx/model_int8.onnx",
+    "int8_threshold": "0.95 provisional, calibration pending",
+    "wasabi": "hf-classifiers/danielrosehill/Agent-Task-Break-Detector-ModernBERT/2026-10-24_f05c9aa",
+    "modal_weights": "deleted 2026-10-24 (66 files, 14.38 GB)"
+  },
+  "dataset_v0_2_commit": "d800fd9",
+  "plugin": "https://github.com/danielrosehill/New-Task-Split (marketplace danielrosehill, new-task-split)"
 }

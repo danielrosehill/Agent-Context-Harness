@@ -1,0 +1,113 @@
+{'eval_loss': '0.7037', 'eval_n': 32, 'eval_accuracy': '0.5', 'eval_auc_pr': '0.3696', 'eval_recall_at_p95': '0', 'eval_threshold': None, 'eval_runtime': '1.316', 'eval_samples_per_second': '24.32', 'eval_steps_per_second': '0.76', 'epoch': '1'}
+{'train_runtime': '12.58', 'train_samples_per_second': '5.088', 'train_steps_per_second': '0.636', 'train_loss': '0.9812', 'epoch': '1'}
+{
+  "args": {
+    "data": "data",
+    "model": "answerdotai/ModernBERT-base",
+    "train_rows": 64,
+    "eval_rows": 32,
+    "epochs": 1.0,
+    "lr": 3e-05,
+    "max_len": 384,
+    "batch": 8,
+    "all_rows": false
+  },
+  "rows": {
+    "train": 64,
+    "validation": 32,
+    "test": 32
+  },
+  "validation": {
+    "n": 32,
+    "accuracy": 0.5,
+    "auc_pr": 0.3696,
+    "recall_at_p95": 0.0,
+    "threshold": null,
+    "accuracy_by_kind": {
+      "far": 0.0,
+      "follow_up": 0.857,
+      "hard_negative": 0.833,
+      "implicit_reference": 0.833,
+      "same_workspace": 0.0,
+      "subtle_pivot": 0.0
+    }
+  },
+  "test": {
+    "n": 32,
+    "accuracy": 0.5625,
+    "auc_pr": 0.4562,
+    "recall_at_p95": 0.1667,
+    "threshold": 0.544,
+    "accuracy_by_kind": {
+      "far": 0.167,
+      "follow_up": 0.8,
+      "hard_negative": 0.75,
+      "implicit_reference": 0.857,
+      "same_workspace": 0.333,
+      "subtle_pivot": 0.0
+    }
+  },
+  "minutes": 0.29,
+  "gpu": "Tesla T4"
+}
+/usr/local/lib/python3.12/site-packages/huggingface_hub/constants.py:302: FutureWarning: The `HF_HUB_ENABLE_HF_TRANSFER` environment variable is deprecated as 'hf_transfer' is not used anymore. Please use `HF_XET_HIGH_PERFORMANCE` instead to enable high performance transfer with Xet. Visit https://huggingface.co/docs/huggingface_hub/package_reference/environment_variables#hfxethighperformance for more details.
+  warnings.warn(
+
+Loading weights:   0%|          | 0/136 [00:00<?, ?it/s]
+Loading weights:  18%|█▊        | 25/136 [00:00<00:00, 245.96it/s]
+Loading weights:  62%|██████▏   | 84/136 [00:00<00:00, 429.02it/s]
+Loading weights: 100%|██████████| 136/136 [00:00<00:00, 573.49it/s]
+[transformers] [1mModernBertForSequenceClassification LOAD REPORT[0m from: answerdotai/ModernBERT-base
+Key               | Status     | 
+------------------+------------+-
+decoder.bias      | UNEXPECTED | 
+classifier.weight | MISSING    | 
+classifier.bias   | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+[RANK 0] Detected kernel version 4.19.0, which is below the recommended minimum of 5.5.0; this can cause the process to hang. It is recommended to upgrade the kernel to the minimum version or higher.
+
+  0%|          | 0/8 [00:00<?, ?it/s]
+ 12%|█▎        | 1/8 [00:01<00:11,  1.61s/it]
+ 25%|██▌       | 2/8 [00:02<00:07,  1.19s/it]
+ 38%|███▊      | 3/8 [00:03<00:05,  1.06s/it]
+ 50%|█████     | 4/8 [00:04<00:03,  1.00it/s]
+ 62%|██████▎   | 5/8 [00:05<00:02,  1.04it/s]
+ 75%|███████▌  | 6/8 [00:06<00:01,  1.06it/s]
+ 88%|████████▊ | 7/8 [00:07<00:00,  1.07it/s]
+100%|██████████| 8/8 [00:07<00:00,  1.08it/s]
+
+  0%|          | 0/1 [00:00<?, ?it/s][A
+                                             
+
+                                     
+[A
+100%|██████████| 8/8 [00:09<00:00,  1.08it/s]
+
+100%|██████████| 1/1 [00:00<00:00, 57.12it/s][A
+
+                                             [A
+
+Writing model shards:   0%|          | 0/1 [00:00<?, ?it/s][A
+
+Writing model shards: 100%|██████████| 1/1 [00:01<00:00,  1.13s/it][A
+Writing model shards: 100%|██████████| 1/1 [00:01<00:00,  1.13s/it]
+
+                                             
+
+100%|██████████| 8/8 [00:12<00:00,  1.08it/s]
+100%|██████████| 8/8 [00:12<00:00,  1.60s/it]
+
+  0%|          | 0/1 [00:00<?, ?it/s]
+100%|██████████| 1/1 [00:00<00:00, 325.87it/s]
+
+  0%|          | 0/1 [00:00<?, ?it/s]
+100%|██████████| 1/1 [00:00<00:00, 314.25it/s]
+
+Writing model shards:   0%|          | 0/1 [00:00<?, ?it/s]
+Writing model shards: 100%|██████████| 1/1 [00:01<00:00,  1.08s/it]
+Writing model shards: 100%|██████████| 1/1 [00:01<00:00,  1.08s/it]
+
+[ai-training] atbd-r0-smoke: exit 0 after 0.6 min

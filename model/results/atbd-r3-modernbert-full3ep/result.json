@@ -1,0 +1,56 @@
+{
+  "args": {
+    "data": "data",
+    "model": "answerdotai/ModernBERT-base",
+    "train_rows": 0,
+    "eval_rows": 0,
+    "epochs": 3.0,
+    "lr": 5e-05,
+    "max_len": 512,
+    "batch": 16,
+    "all_rows": false
+  },
+  "rows": {
+    "train": 5104,
+    "validation": 697,
+    "test": 608
+  },
+  "validation": {
+    "n": 697,
+    "accuracy": 0.9598,
+    "auc_pr": 0.9905,
+    "recall_at_p95": 0.9247,
+    "threshold": 0.9182,
+    "accuracy_by_kind": {
+      "counterfactual_continue": 0.91,
+      "far": 0.981,
+      "follow_up": 0.972,
+      "hard_negative": 1.0,
+      "implicit_reference": 1.0,
+      "same_workspace": 0.934,
+      "subtle_pivot": 0.907
+    },
+    "pair_accuracy": 0.8403,
+    "pairs": 144
+  },
+  "test": {
+    "n": 608,
+    "accuracy": 0.9507,
+    "auc_pr": 0.9861,
+    "recall_at_p95": 0.9019,
+    "threshold": 0.923,
+    "accuracy_by_kind": {
+      "counterfactual_continue": 0.896,
+      "far": 0.978,
+      "follow_up": 0.979,
+      "hard_negative": 1.0,
+      "implicit_reference": 1.0,
+      "same_workspace": 0.867,
+      "subtle_pivot": 0.923
+    },
+    "pair_accuracy": 0.7913,
+    "pairs": 115
+  },
+  "minutes": 6.94,
+  "gpu": "NVIDIA L4"
+}

@@ -105,3 +105,15 @@ The Haiku backend needs the `anthropic` package: `uv venv .venv && uv pip instal
   }
 }
 ```
+
+## Packaged plugin (2026-10-24)
+
+The installable version of this hook, which uses the local int8 model and makes no API calls, is
+[danielrosehill/New-Task-Split](https://github.com/danielrosehill/New-Task-Split).
+
+- **Setup:** `/plugin install new-task-split@danielrosehill`, then `ntsctl install --shadow`.
+- **On and off:** `ntsctl enable [--split|--shadow]` and `ntsctl disable`.
+- **Update the model:** `ntsctl update-model`.
+- **Remove:** `ntsctl uninstall`.
+
+The plugin README has the full guide. This draft remains the research copy, including its Haiku teacher backend.
