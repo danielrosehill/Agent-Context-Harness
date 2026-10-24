@@ -1,7 +1,7 @@
 {
   "name": "Agent-Context-Harness",
   "summary": "Per-turn router that sends each user message to the current task, an existing parallel worker, or a new parallel full-agent session, to keep context clean instead of compacting.",
-  "status": "idea-research",
+  "status": "research+draft-hook",
   "created": "2026-10-16",
   "visibility": "public",
   "repo_url": "https://github.com/danielrosehill/Agent-Context-Harness",
@@ -9,19 +9,33 @@
   "source": {
     "audio": "context/voice-note.mp3",
     "transcript_raw": "context/transcript-raw.txt",
-    "transcription": "AssemblyAI universal, 2026-10-16"
+    "transcription": "AssemblyAI universal, 2026-10-16",
+    "audio_2": "not archived (Daniel's request, 2026-10-24)",
+    "transcript_raw_2": "context/2026-10-24_auto-session-hook-transcript-raw.txt"
   },
   "prior_art": {
     "verified": "2026-10-16",
     "closest": "Claude Code Projects (https://code.claude.com/docs/en/claude-projects)",
     "verdict": "Core idea shipped in Claude Code Projects. Open gaps: explicit inspectable router with confidence and eval set, session-thread-subagent tree view, nesting, vendor-neutral harness."
   },
-  "next_step": "Phase 1: trial Claude Code Projects on a real repo and log routing decisions vs. intended (docs/development-plan.md).",
+  "next_step": "L1: test hooks/new-task-split terminal transport end to end in tmux; then L2 gold eval set (docs/local-classifier-plan.md).",
   "related_repos": [
     "https://github.com/danielrosehill/Claude-Air-Traffic-Control",
     "https://github.com/danielrosehill/Claude-Fleet-Traffic-Shaper",
     "https://github.com/danielrosehill/Claude-Tooling-Prior-Art"
   ],
   "hf_resources": [],
-  "hf_resources_checked": "2026-10-16"
+  "hf_resources_checked": "2026-10-24",
+  "prior_art_local_classifier": {
+    "verified": "2026-10-24",
+    "doc": "docs/prior-art-2026-10-24.md",
+    "verdict": "Gap open: no harness or released model decides per turn new-session vs continue; Claude Code has only a time-based idle-return /clear hint (75+ min, v2.1.92)."
+  },
+  "decisions": [
+    {
+      "date": "2026-10-24",
+      "decision": "Classifier runs on local inference, not a per-turn API call",
+      "why": "Haiku draft measured 3-5 s blocking latency per prompt; local is portable across harnesses"
+    }
+  ]
 }

@@ -184,3 +184,20 @@ Append one entry per decision: date, decision, what settled it.
 
 - 2026-10-16: Repo opened as idea and research. Prior-art scan done before any design work, at
   Daniel's request in the voice note.
+- 2026-10-24: Second voice note
+  ([`../context/2026-10-24_auto-session-hook-transcript-raw.txt`](../context/2026-10-24_auto-session-hook-transcript-raw.txt))
+  narrows a track to the **local CLI, in place**: replace the manual `/clear` / `/new` Daniel already
+  does, rather than spawning a parallel `--bg` worker. Requirements from it: a visible notice when a
+  split happens, undo through session history (`/resume`), and a way to tell it "you got that wrong"
+  so it doesn't repeat. Projects (phase 1) doesn't cover this, because it is cloud-only.
+- 2026-10-24: Hooks can't run `/clear` or swap sessions (hooks docs, v2.1.310), so the in-place
+  version blocks the prompt and drives the terminal (Konsole D-Bus or tmux) to `/clear` and re-send.
+  Draft in [`../hooks/new-task-split/`](../hooks/new-task-split/). Transport untested.
+- 2026-10-24: **The classifier will be a local model, not an API call per turn.** Daniel's decision,
+  after measuring the Haiku 5.5 hook draft: about $0.0001 a turn, but 3–5 s of blocking latency on
+  every prompt. A local model is also portable to other harnesses. The prior-art update
+  ([`prior-art-2026-10-24.md`](prior-art-2026-10-24.md)) found no built-in, harness or released
+  model doing this. Claude Code's only related feature is a time-based idle-return `/clear` hint
+  (75+ min idle, since v2.1.92). Plan: [`local-classifier-plan.md`](local-classifier-plan.md). The
+  Haiku path is kept only as a teacher for labelling.
+

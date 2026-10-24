@@ -6,16 +6,24 @@ This is the research repo for a per-turn task router. On each user message it de
 `continue`, `route_to_existing`, `spawn_new` and `split`. New tasks go to parallel full agent
 sessions, not subagents, so that each thread's context stays clean.
 
-## Status (2026-10-16)
+## Status (2026-10-24)
 
-- Idea and research only. There is no code.
-- The prior-art scan is done, in `docs/prior-art.md`. Its main finding: Claude Code Projects
-  already does per-message routing to parallel cloud threads.
+- Two tracks. (1) The original router idea: research only. Claude Code Projects already does
+  per-message routing to parallel cloud threads (`docs/prior-art.md`). (2) Since 2026-10-24, a
+  **local-CLI split hook** with a **local classifier model**. The draft hook is in
+  `hooks/new-task-split/`, the prior art in `docs/prior-art-2026-10-24.md` (gap open), and the
+  plan in `docs/local-classifier-plan.md`.
+- No per-turn API calls in the final design: Daniel's decision, 2026-10-24. The Haiku backend in
+  the hook is only a teacher for labelling data.
 
 ## Layout
 
 - `context/voice-note.mp3`: the source voice note.
 - `context/transcript-raw.txt`: its raw transcript (AssemblyAI universal).
+- `context/2026-10-24_auto-session-hook-transcript-raw.txt`: raw transcript of the second voice
+  note (AssemblyAI universal). Immutable like the first. The MP3 was deliberately not added.
+- `hooks/new-task-split/`: draft `UserPromptSubmit` + `SessionStart` hook and its README.
+- `docs/prior-art-2026-10-24.md`, `docs/local-classifier-plan.md`: the local-classifier track.
 - `docs/prior-art.md`: what exists, with links and confirmed or inferred tags.
 - `docs/spec.md`: the draft spec. Items are tagged [D] (Daniel), [P] (agent proposal) or [PA]
   (shaped by prior art). It ends with a decision log.
@@ -25,7 +33,7 @@ sessions, not subagents, so that each thread's context stays clean.
 
 ## Conventions
 
-- `context/transcript-raw.txt` is **immutable**. Do not correct ASR errors in it (for example
+- `context/*transcript-raw.txt` files are **immutable**. Do not correct ASR errors in it (for example
   "Claus"/"plaud" for Claude, "wordprompts" for Weird Prompts). If a cleaned version is needed,
   write it to a separate file.
 - Keep the provenance tags in `docs/spec.md`. When something is decided, add a dated entry to
@@ -35,6 +43,6 @@ sessions, not subagents, so that each thread's context stays clean.
 
 ## Next step
 
-Phase 1 of `docs/development-plan.md`: trial Claude Code Projects on a real repo from the phone,
-and log every routing decision against what Daniel wanted. Build nothing until that trial shows
-a gap.
+Local track, step L1 in `docs/development-plan.md`: test the hook's terminal transport end to end
+in a throwaway tmux session. Then L2, the gold eval set. The Projects trial (phase 1) still stands
+for the cloud/mobile router idea.

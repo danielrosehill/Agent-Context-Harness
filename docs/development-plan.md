@@ -74,3 +74,21 @@ CLI workers. Decide then whether this becomes its own repo.
 - Replacing compaction. Workers still compact. The router only delays the need for it.
 - Building a parallel-session manager. Claude Squad, Crystal/Nimbalyst, Vibe Kanban and agent
   view already cover that.
+
+## Update 2026-10-24: local-classifier track
+
+A second track runs alongside phases 1–6, and doesn't wait on the Projects trial. Projects is
+cloud-only, and this track replaces the manual `/clear` in the **local CLI**.
+
+- **L0. Done 2026-10-24.** Prior-art update ([`prior-art-2026-10-24.md`](prior-art-2026-10-24.md)):
+  the gap is open. Hook draft with a Haiku teacher backend ([`../hooks/new-task-split/`](../hooks/new-task-split/)).
+- **L1.** Test the terminal transport end to end in a throwaway tmux session: block, `/clear`,
+  re-send, SessionStart notice, undo.
+- **L2.** Gold eval set from Daniel's own transcripts (this replaces phase 2's labels with the
+  binary `continue` / `new_task`).
+- **L3.** Teacher labelling and synthetic splices, batched.
+- **L4.** Fine-tune ModernBERT-base or Ettin-150M, export int8 ONNX, benchmark latency.
+- **L5.** Swap the hook's backend to the local model and run it for a week, logging undos.
+
+Details and exit tests are in [`local-classifier-plan.md`](local-classifier-plan.md).
+

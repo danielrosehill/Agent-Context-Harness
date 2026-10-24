@@ -1,6 +1,6 @@
 # Agent Context Harness
 
-**Status:** idea and research. Opened 2026-10-16. No code yet.
+**Status:** idea and research, opened 2026-10-16. Since 2026-10-24 there is also a local-CLI track: a draft split hook ([`hooks/new-task-split/`](hooks/new-task-split/)) and a plan to train a **local classifier** for it ([`docs/local-classifier-plan.md`](docs/local-classifier-plan.md)).
 
 When you work with a coding agent in a flow state, you keep dropping new, unrelated tasks into
 the same thread: a bug, then an idea, then another fix. That history piles up and degrades the
@@ -48,6 +48,10 @@ See [`docs/prior-art.md`](docs/prior-art.md).
 | [`docs/prior-art.md`](docs/prior-art.md) | Prior-art scan with sources, confidence levels and verdict |
 | [`docs/spec.md`](docs/spec.md) | Draft spec: routing decision, hook points, spawning, tree model, open questions |
 | [`docs/development-plan.md`](docs/development-plan.md) | Phased plan, POC first |
+| [`context/2026-10-24_auto-session-hook-transcript-raw.txt`](context/2026-10-24_auto-session-hook-transcript-raw.txt) | Raw transcript of the second voice note, about a local `/clear`-replacing hook (AssemblyAI universal, 2026-10-24). Audio not archived |
+| [`docs/prior-art-2026-10-24.md`](docs/prior-art-2026-10-24.md) | Prior-art update: no harness or released model decides "new session vs continue" per turn |
+| [`docs/local-classifier-plan.md`](docs/local-classifier-plan.md) | Plan for a small local ONNX classifier: data, model, exit tests |
+| [`hooks/new-task-split/`](hooks/new-task-split/) | Draft Claude Code hook: blocks an unrelated prompt, runs `/clear`, re-sends it |
 | [`project.json`](project.json) | Machine-readable summary |
 
 ## Related
