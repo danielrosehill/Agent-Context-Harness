@@ -35,6 +35,7 @@ sessions, not subagents, so that each thread's context stays clean.
 - `docs/development-plan.md`: phases 0–6, each with an exit test.
 - `model/`: `baseline.py`, `train.py` (HF Trainer cross-encoder), `common.py`. `model/data/` (v0.2 JSONL) is gitignored.
 - `docs/eval-plan.md`: pass bar, baselines, every training run.
+- `space/`: Gradio Space `danielrosehill/Agent-Task-Break-Detector` (public, created 2026-10-25). Reads threshold, ONNX path and tokenizer from the model's `new_task_split.json`, so a new model upload needs no Space change. `examples.json` holds two matched pairs from the v0.2 test split. Redeploy with `hf upload … --repo-type space` (see README).
 - `project.json`: machine-readable summary. Keep `status` and `next_step` current.
 - `eval/`: does not exist yet. Phase 1 and 2 data goes here, redacted.
 

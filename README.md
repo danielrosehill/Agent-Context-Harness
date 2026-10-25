@@ -53,6 +53,7 @@ See [`docs/prior-art.md`](docs/prior-art.md).
 | [`docs/local-classifier-plan.md`](docs/local-classifier-plan.md) | Plan for a small local ONNX classifier: data, model, exit tests |
 | [`dataset/`](dataset/) | Scripts and card for the public synthetic training set [Agent-Task-Break-Detector](https://huggingface.co/datasets/danielrosehill/Agent-Task-Break-Detector) |
 | [`hooks/new-task-split/`](hooks/new-task-split/) | Draft Claude Code hook: blocks an unrelated prompt, runs `/clear`, re-sends it |
+| [`space/`](space/) | Source of the Hugging Face Space [Agent-Task-Break-Detector](https://huggingface.co/spaces/danielrosehill/Agent-Task-Break-Detector): explainer plus live int8 ONNX demo. Deploy: `hf upload danielrosehill/Agent-Task-Break-Detector space . --repo-type space --exclude "__pycache__/*"` |
 | [`project.json`](project.json) | Machine-readable summary |
 
 ## Related
