@@ -50,7 +50,7 @@ context, a wrong `continue` costs some extra context. Tune for **precision on `n
 1. **Teacher labels on real coding sessions.** Daniel's own `~/.claude/projects/**/*.jsonl`
    transcripts, plus public Claude Code trace sets (licences to check: see the prior-art doc).
    For each user turn, a frontier model labels `continue` / `new_task` with a confidence.
-   Batch it (`batch-jobs` plugin), never per-turn.
+   Batch it (`llm-ops` plugin), never per-turn.
 2. **Synthetic splices.** Join the opening of session B onto the middle of an unrelated session A
    to make hard, guaranteed `new_task` positives. Splice within the **same repo** too, so the
    model can't learn "different repo name = new task".
